@@ -4,13 +4,13 @@ provider "azurerm" {
 }
 
 resource "azurerm_resource_group" "rg" {
-    name     = "rg-implantacao"
+    name     = var.rg-nome
     location = "brazilsouth"
   
 }
 
 resource "azurerm_app_service_plan" "plan" {
-    name                = "appslots-implantacao"
+    name                = var.appplan-nome
     location            = azurerm_resource_group.rg.location
     resource_group_name = azurerm_resource_group.rg.name
   
@@ -22,14 +22,14 @@ resource "azurerm_app_service_plan" "plan" {
 }
 
 resource "azurerm_app_service" "appservice" {
-  name = "appserviceslotsluiz"
+  name = var.appservice-nome
   location = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
   app_service_plan_id = azurerm_app_service_plan.plan.id
 }
 
 resource "azurerm_app_service_slot" "slot" {
-  name = "slotluiz"
+  name = var.slot-nome
   location = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
   app_service_name = azurerm_app_service.appservice.name
